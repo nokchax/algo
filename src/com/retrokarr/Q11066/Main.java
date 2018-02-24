@@ -24,6 +24,14 @@ public class Main {
 
     }
 
+    /*
+    1, 2, 3, 4, ..., n-1, n
+
+    n까지의 최소 합
+
+    Math.min(2*(n + (n-1) + n-2까지의 최소), 2* (n + n-1까지의 최소))
+    로 풀면 되지 않을까...?
+     */
     static int solve(int[] nums) {
 
         return 1;
