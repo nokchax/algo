@@ -25,7 +25,8 @@ public class Main {
     }
 
     /*
-    1, 2, 3, 4, ..., n-1, n
+    연쇄 행렬 곱셈 알고리즘
+    matrix chain multiplication
      */
     static int solve(int[] nums) {
 
