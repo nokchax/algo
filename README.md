@@ -1,3 +1,2 @@
 # Algorithm Study
-#### training site
-acmicpc.net
+training site : acmicpc.net
