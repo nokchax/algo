@@ -29,7 +29,6 @@ public class Main {
     matrix chain multiplication
      */
     static int solve(int[] nums) {
-
         return 1;
     }
 
