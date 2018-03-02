@@ -63,6 +63,8 @@ public class Main {
             //temp = Math.min(temp, DFS(y, k) + DFS(k + 1, x));
         }
 
+        //sum에 대한 추가적인 dp..
+
         totalSum[y][x] = temp + totalSum[y][where] + totalSum[where + 1][x];
         return cache[y][x] = temp;
     }
