@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int[][] cache;
-    static int[][] totalSum;
+    static int[] sum;
     static int[] nums;
     public static void main(String[] args) throws IOException {
         FS sc = new FS();
@@ -20,16 +20,22 @@ public class Main {
             int num = sc.nextInt();
             nums = new int[num];
             cache = new int[num][num];
-            totalSum = new int[num][num];
+            sum = new int[num];
+            int tempSum = 0;
 
-            for(int i = 0 ; i < num ; ++i)
-                cache[i][i] = nums[i] = sc.nextInt();
+            for(int i = 0 ; i < num ; ++i) {
+                Arrays.fill(cache[i], -1);
+                cache[i][i] = 0;
+                nums[i] = sc.nextInt();
+                tempSum += nums[i];
+                sum[i] = tempSum;
+            }
 
             sb.append(DFS(0, num - 1)).append('\n');
 
             for(int i = 0 ; i < num ; ++i) {
                 for (int j = 0; j < num; ++j)
-                    System.out.printf("%4d", totalSum[i][j]);
+                    System.out.printf("%4d", cache[i][j]);
                 System.out.println();
             }
         }
@@ -41,8 +47,7 @@ public class Main {
     matrix chain multiplication
      */
     static int DFS(int y, int x) {
-        System.out.println(y + ", " + x);
-        if(cache[y][x] > 0)
+        if(cache[y][x] > -1)
             return cache[y][x];
 
         /**
@@ -53,19 +58,13 @@ public class Main {
         int min = Math.min(y, x);
         int max = Math.max(y, x);
         int temp = Integer.MAX_VALUE;
-        int where = 0;
         for(int k = min ; k < max ; ++k) {
-            int target = DFS(y, k) + DFS(k + 1, x);
-            if(target <= temp) {
-                temp = target;
-                where = k;
-            }
-            //temp = Math.min(temp, DFS(y, k) + DFS(k + 1, x));
+            int start = min > 0 ? sum[min] : 0;
+            int target = DFS(y, k) + DFS(k + 1, x) + sum[max] - start;
+            temp = Math.min(temp, target);
         }
 
         //sum에 대한 추가적인 dp..
-
-        totalSum[y][x] = temp + totalSum[y][where] + totalSum[where + 1][x];
         return cache[y][x] = temp;
     }
 
