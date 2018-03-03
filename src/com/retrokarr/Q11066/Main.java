@@ -50,11 +50,6 @@ public class Main {
         if(cache[y][x] > -1)
             return cache[y][x];
 
-        /**
-         * for(int k = 0 , k < x ; ++k)
-         *      Math.min(DFS(y, k) + DFS(k, x))
-         */
-
         int min = Math.min(y, x);
         int max = Math.max(y, x);
         int temp = Integer.MAX_VALUE;
