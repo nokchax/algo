@@ -29,11 +29,12 @@ public class Main {
     }
 }
 /**
-     front += skip;
-
-     if(front + skip > arr.size()){
-         front %= arr.size();
+ int index = 0;
+ while (!list.isEmpty()) {
+     index += m;
+     if (index >= list.size()) {
+         index %= list.size();
      }
-
-     sb.append(arr.remove(front) + ", ");
+     sb.append(list.remove(index) + ", ");
+ }
  */
