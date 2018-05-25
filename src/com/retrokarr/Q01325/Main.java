@@ -3,61 +3,59 @@ package com.retrokarr.Q01325;
 import java.io.*;
 import java.util.*;
 
-//왜지
 public class Main {
     static boolean[] visited;
-    static boolean[][] hackable;
-    static int vertex, relations;
+    static int computers;
+    static List<List<Integer>> hasFaiths;
     public static void main(String[] args) throws IOException {
         FS sc = new FS();
-        vertex = sc.nextInt();
-        relations = sc.nextInt();
-        hackable = new boolean[vertex + 1][vertex + 1];
+
+        computers = sc.nextInt();
+        int relations = sc.nextInt();
+        hasFaiths = new ArrayList<>(computers + 1);
+        for(int i = 0 ; i <= computers ; ++i)
+            hasFaiths.add(new ArrayList<>());
 
         for(int i = 0 ; i < relations ; ++i) {
             int a = sc.nextInt();
             int b = sc.nextInt();
-
-            hackable[b][a] = true;
+            hasFaiths.get(b).add(a);
         }
 
-        List<Integer> ret = new ArrayList<>();
         int max = -1;
 
-        for(int i = 1 ; i <= vertex ; ++i) {
-            visited = new boolean[vertex + 1];
+        List<Integer> ret = new ArrayList<>();
+        for(int i = 1 ; i <= computers ; ++i) {
+            visited = new boolean[computers + 1];
+            visited[i] = true;
+            int numOfHackableCom = count(i);
 
-            int totalHackableCom = DFS(i);
-
-            if(ret.isEmpty()) {
+            if(max == numOfHackableCom) {
                 ret.add(i);
-                max = totalHackableCom;
-            } else {
-                if(totalHackableCom < max)
-                    continue;
-                if(totalHackableCom > max) {
-                    ret.clear();
-                    max = totalHackableCom;
-                }
+            } else if(max < numOfHackableCom) {
+                ret.clear();
                 ret.add(i);
+                max = numOfHackableCom;
             }
         }
 
         Collections.sort(ret);
         StringBuilder sb = new StringBuilder();
-        for(int i : ret)
-            sb.append(i).append(' ');
+        for(int i = 0 ; i < ret.size() ; ++i)
+            sb.append(ret.get(i)).append(' ');
 
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 
-    private static int DFS(int target) {
-        visited[target] = true;
+    static int count(int start) {
         int ret = 1;
+        List<Integer> cur = hasFaiths.get(start);
 
-        for(int i = 1 ; i <= vertex ; ++i) {
-            if(hackable[target][i] && !visited[target]) {
-                ret += DFS(i);
+        for(int i = 0; i < cur.size() ; ++i) {
+            int next = cur.get(i);
+            if(!visited[next]) {
+                visited[next] = true;
+                ret += count(next);
             }
         }
 
