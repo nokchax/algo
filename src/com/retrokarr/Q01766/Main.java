@@ -3,52 +3,45 @@ package com.retrokarr.Q01766;
 import java.io.*;
 import java.util.*;
 
-//can't pass
+//use priority queue
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    static List<List<Integer>> relations;
-    static Stack<Integer> stack = new Stack<>();
-    static boolean[] solved;
-    static int questions;
-    static int numberOfRelation;
 
     public static void main(String[] args) throws IOException {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
         StringTokenizer st = new StringTokenizer(br.readLine());
-        questions = Integer.parseInt(st.nextToken());
-        numberOfRelation = Integer.parseInt(st.nextToken());
-        solved = new boolean[questions + 1];
-        relations = new ArrayList<>(questions + 1);
-        relations.add(null);
+        int questions = Integer.parseInt(st.nextToken());
+        int numberOfRelation = Integer.parseInt(st.nextToken());
+
+        ArrayList<Integer>[] relations = new ArrayList[questions + 1];
+        int[] in = new int[questions + 1];
+
         for(int i = 1 ; i <= questions ; ++i)
-            relations.add(new ArrayList<>());
+            relations[i] = new ArrayList<>();
 
         for(int i = 0 ; i < numberOfRelation ; ++i) {
             st = new StringTokenizer(br.readLine());
-            relations.get(Integer.parseInt(st.nextToken())).add(Integer.parseInt(st.nextToken()));
+            int prev = Integer.parseInt(st.nextToken());
+            int next = Integer.parseInt(st.nextToken());
+
+            relations[prev].add(next);
+            in[next]++;
         }
 
         for(int i = 1 ; i <= questions ; ++i)
-            Collections.sort(relations.get(i), Collections.reverseOrder());
+            if(in[i] == 0)
+                pq.add(i);
 
-        for(int i = questions ; i > 0 ; --i)
-            if(!solved[i])
-                DFS(i);
+        while(!pq.isEmpty()) {
+            int curQuestion = pq.poll();
+            bw.write(curQuestion + " ");
 
-        while(!stack.isEmpty())
-            bw.write(stack.pop() + " ");
+            for(int next : relations[curQuestion])
+                if(--in[next] == 0)
+                    pq.add(next);
+        }
 
         bw.close();
-    }
-
-    private static void DFS(int start) {
-        solved[start] = true;
-        List<Integer> relation = relations.get(start);
-
-        for(int next : relation)
-            if(!solved[next])
-                DFS(next);
-
-        stack.push(start);
     }
 }
