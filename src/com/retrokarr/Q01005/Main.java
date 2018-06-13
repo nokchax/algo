@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
- * StringTokenizer is faster than just user br.readLine().split(" "); then Integer.parse();
+ * StringTokenizer is faster than just use br.readLine().split(" "); then Integer.parse();
  */
 public class Main {
     private static int numOfBuild;
