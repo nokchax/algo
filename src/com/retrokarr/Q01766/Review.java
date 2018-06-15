@@ -10,14 +10,14 @@ public class Review {
         StringTokenizer st = new StringTokenizer(br.readLine());
 
         int N = Integer.parseInt(st.nextToken());
-        int nReliation = Integer.parseInt(st.nextToken());
+        int nRelation = Integer.parseInt(st.nextToken());
         int[] in = new int[N + 1];
         ArrayList<Integer>[] problem = new ArrayList[N + 1];
 
         for(int i = 1 ; i <= N ; ++i)
             problem[i] = new ArrayList<>();
 
-        for(int i = 0 ; i < nReliation ; ++i) {
+        for(int i = 0 ; i < nRelation ; ++i) {
             st = new StringTokenizer(br.readLine());
             int pre = Integer.parseInt(st.nextToken());
             int post = Integer.parseInt(st.nextToken());
