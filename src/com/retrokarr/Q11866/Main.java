@@ -18,6 +18,12 @@ public class Main {
         for(int i = 1 ; i <= nums ; ++i)
             q.add(i);
 
+        /*
+         index += skip;
+         if (index >= list.size()) {
+             index %= list.size();
+         }
+         */
         while(!q.isEmpty()) {
             for(int i = 1 ; i < skip ; ++i)
                 q.add(q.poll());
@@ -28,13 +34,3 @@ public class Main {
         System.out.println("<" + String.join(", ", answer) + ">");
     }
 }
-/**
- int index = 0;
- while (!list.isEmpty()) {
-     index += m;
-     if (index >= list.size()) {
-         index %= list.size();
-     }
-     sb.append(list.remove(index) + ", ");
- }
- */
